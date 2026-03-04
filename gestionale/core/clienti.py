@@ -33,6 +33,9 @@ class Cliente:
 
 @dataclass
 class ClienteRecord:
+    def __init__(self):
+        self.nome = None
+
     name: str
     email: str
     categoria: str

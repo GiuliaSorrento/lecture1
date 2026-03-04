@@ -1,7 +1,7 @@
-from gestionale.ordini import Ordine, RigaOrdine, OrdineConSconto
-from gestionale.prodotti import Prodotto, crea_prodotto_standard, ProdottoRecord
-from gestionale.clienti import Cliente, ClienteRecord
-
+from gestionale.vendite.ordini import Ordine, RigaOrdine, OrdineConSconto
+from gestionale.core.prodotti import Prodotto, crea_prodotto_standard, ProdottoRecord
+from gestionale.core.clienti import Cliente, ClienteRecord
+import networkx as hx  #importa la libreria networkx(package)
 print("=======================================================")
 
 p1 = Prodotto("Ebook Reader", 120.0, 1, "AAA")
