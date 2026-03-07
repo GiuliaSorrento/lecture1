@@ -14,7 +14,7 @@ class fattura:
 
     def genera_fattura(self):
         linee = [
-            f"="*60  #ripeti 60 voltr uguale
+            f"="*60  #ripeti 60 volte uguale
             #intestazione fattura:data e numero fattura
             f"Fattura no. {self.numero_fattura} del {self.data}"
             f"=" * 60
