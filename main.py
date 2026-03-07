@@ -11,7 +11,6 @@ print (p1)
 print (p2)
 print("=======================================================")
 
-c1 = Cliente("Mario Rossi", "mail@mail.com", "Gold")
 
 cliente1 = ClienteRecord("Mario Rossi", "mariorossi@example.com", "Gold")
 p1 = ProdottoRecord("Laptop", 1200.0)

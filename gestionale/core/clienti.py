@@ -31,12 +31,11 @@ class Cliente:
         # "Cliente Fulvio Bianchi (Gold) - fulvio@google.com"
         return f"Cliente {self.nome} ({self.categoria}) - {self.mail}"
 
+from dataclasses import dataclass
+
 @dataclass
 class ClienteRecord:
-    def __init__(self):
-        self.nome = None
-
-    name: str
+    nome: str        # I due punti e il tipo sono OBBLIGATORI
     email: str
     categoria: str
 
