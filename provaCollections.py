@@ -1,6 +1,9 @@
 import copy
+from collections import Counter
 
+from gestionale.core.clienti import ClienteRecord
 from gestionale.core.prodotti import ProdottoRecord
+from gestionale.vendite.ordini import RigaOrdine, Ordine
 
 p1 = ProdottoRecord("Laptop",1200.0)
 p2 = ProdottoRecord("Mouse",20.0)
@@ -105,8 +108,8 @@ s.add(ProdottoRecord("aaa", 20.0))   #aggiungo un elemento
 s.update([ProdottoRecord("aaa", 1200.0), ProdottoRecord("bbb", 20.0)]) #aggiunge più elementi, li metto dentro una lista
 
 #togliere
-s.remove(elem)   #se non esiste elemento, da errore come key error
-s.discard(elem)  #rimuove un elemento SENZA ARRABBIARSI SE QUESTO NON ESISTE, EVIT0 DI DOBER GESTIRE UN'ECCEZIONE
+#s.remove(elem)   #se non esiste elemento, da errore come key error
+#s.discard(elem)  #rimuove un elemento SENZA ARRABBIARSI SE QUESTO NON ESISTE, EVIT0 DI DOBER GESTIRE UN'ECCEZIONE
 s.pop()  #rimuove e restituisce un elemento arbitrario, visto che non abbiamo un ordinamento, casuale
 s.clear() #svuota il set
 
@@ -120,5 +123,146 @@ s1.issubset(s) #se gli elementi di s1 sono contenuti in s
 s1.issuperset(s)       #se gli elmenti di s sono contenuti in s1
 s1.isdisjoint(s)  #True se gli elementi di s e di s1 sono tutti diversi
 
-#dizionario
+#dizionari
+catalogo = {
+    "LAP001" : ProdottoRecord("Laptop", 1200.0),
+    "LAP002" : ProdottoRecord("Laptop Pro", 2300.0),
+    "MAU001" : ProdottoRecord("Mouse", 20.0),
+    "AUR001": ProdottoRecord("Auricolari", 250.0)
+}
+
+cod ="LAP002"
+prod = catalogo[cod] #cerco con [chiave], così evitiamo di ciclare su una lista, non dipende dal numero di elementi del dizionario in vece la lista si
+
+print(f"il prodotto con codice {cod} è {prod}")
+
+#print(f"Cerco un altro oggetto: {catalogo["nonesiste"]}")   #mi da errore perche chiave non esiste, devo usare get
+
+prod1 = catalogo.get("nonesiste")  #con get non mi da errore se la chiave non esiste
+if prod1 is None:
+    print("prodotto non trovato")
+
+prod2 = catalogo.get("nonesiste2", ProdottoRecord("Sconosciuto",0))   #con get posso inserire un valore default che se non trova la chiave viene restituito
+print(prod2)
+
+keys = list(catalogo.keys())
+values = list(catalogo.values()) #entrambi i metodi restituiscono un oggetto set, se li voglio stampare li metto in una lista e stampo la lista
+for k in keys:
+    print(k)
+for v in values:
+    print(v)
+
+for keys2,values2 in catalogo.items():   #.items() per ciclare sulle coppie chiave valore
+    print(f"Cod {keys2} è associata al val {values2}")
+
+rimosso = catalogo.pop("LAP002")
+print(rimosso) #mi da l'oggetto associato alla chiave che viene rimosso
+
+#dict comprehension
+prezzi ={codice: prod.prezzo_unitario for codice,prod in catalogo.items()}   #crea dizionario specificando come questo dizionario deve essere costruito direttamente come argomento
+
+#da ricordare per dict
+d = {}
+key=" ";
+#v = d[key]   #per leggere, restituisce key error se non esiste
+#d[key] = v #scrivo su dizionario, sia per creare nuova coppia sia per aggiornarla
+#v = d.get[key, "default"]  #legge senza rischiare keyerrore, se non esiste prende il default
+#d.pop(key) #restituisce un valore e lo cancella dal dizionario
+d.clear()  #pulisce tutto
+d.keys()
+d.values()
+d.items()
+if key in d: #condizione che verifica se key è presente nel dizionario
+    pass
+
+"""esercizio live
+Per chiacuno dei seguenti casi decidere quale struttura usare"""
+
+"""
+1) memorizzare un elenco di ordini che dovranno essere processati in ordine di arrivo
+2) memorizzare i codici fiscali dei clienti (univoco)
+3) creare un database di prodotti che posso cercare con un codice univoco
+4)memorizare le coordinate gps della nuova sede di Roma
+5)tenere traccia delle categorie di clienti che hanno fatto un ordine in un certo range temporale"""
+
+#1 lista
+riga1 = RigaOrdine(p1,4)
+riga2 = RigaOrdine(p2,1)
+riga3 = RigaOrdine(p3,5)
+
+#cliente1 = ClienteRecord("giulia", "giulia@gmail.com", "Gold")
+#cliente2 = ClienteRecord("anna", "anna@gmail.com","Silver")
+
+#ordine1 = Ordine([riga1, riga2], cliente1)
+#ordine2 = Ordine([riga3,riga2], cliente2)
+#ordine3 = Ordine([],cliente1)
+
+#ordini = [ordine1,ordine2]
+#ordini.append(ordine3)
+
+#2 SET, DEVO MEMORIZZARE SOLO I CODICI FISCALI NON ANCHE I CLIENTI, IL SET VA BENE PERCHE I CF SONO UNICI, NO DUPLICATI
+codicif = set("cf1", "cf2","cf3")
+
+#3dizionario codice, prodotto
+prodotti={"cod1": p1, "cod2": p2, "cod3": p3}
+
+#4 tupla, latitudine e longitudine
+coordinateRoma=(45,130)
+
+#5 set di categorie
+categorie4Gennaio = set(cliente1.categoria,cliente2.categoria)
+categorie4Gennaio.add("Bronze")
+
+
+
+print("--------------------------------------------------------")
+#COUNTER
+cliente1 = ClienteRecord("giulia", "giulia@gmail.com", "Gold")
+cliente2 = ClienteRecord("anna", "anna@gmail.com","Silver")
+cliente3 = ClienteRecord("gio", "gio@gmail.com","Bronze")
+cliente4 = ClienteRecord("piero", "piero@gmail.com","Gold")
+cliente5 = ClienteRecord("mario", "mario@gmail.com","Gold")
+cliente6 = ClienteRecord("u", "u@gmail.com","Silver")
+cliente7 = ClienteRecord("a", "a@gmail.com","Silver")
+cliente8 = ClienteRecord("b", "b@gmail.com","Gold")
+
+listaClienti = [cliente1, cliente2, cliente3, cliente4, cliente5, cliente6,cliente7,cliente8]
+
+categori =[c.categoria for c in listaClienti]   #list comprehension
+categorie_counter = Counter(categorie)
+
+print("Distribuzione categorie clienti")
+print(categorie_counter)   #è un dizionario categoria: frequenza
+
+print("Catgeoria piu frequente")
+print(categorie_counter.most_common(2))  #mi prende le due categorie più frequenti
+
+print("totale")
+print(categorie_counter.total())   #mi dice quanti elementi ho in questo counter
+
+vendite_gennaio = Counter(
+    {"Laptop": 13, "Tablet": 15}
+)
+vendite_febbraio = Counter(
+    {"Laptop": 3, "Stampante": 1}
+)
+
+vendite_bimestre = vendite_gennaio + vendite_febbraio
+print(f"vendite gennaio: {vendite_gennaio}")
+print(f"vendite febbraio: {vendite_febbraio}")
+print(f"vendite bimestre: {vendite_bimestre}")   #aggrega le chiavi uguali e somma i valori
+
+#fare le differenze
+print(f"differenze vendite: {vendite_gennaio - vendite_febbraio}")
+
+vendite_gennaio["Laptop"] += 4   #aggiorno
+
+#metodi counter
+
+#c.mostcommon(n)  #restituisce gli n elementi più frequenti
+#c.total()  #somma dei conteggi
+#simile a un dizionario ma con metodi in più
+
+#defaultdicts
+
 

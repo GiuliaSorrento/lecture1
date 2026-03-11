@@ -89,10 +89,16 @@ class Abbonamento:
     def prezzo_finale(self) -> float:
         return self.prezzo_mensile*self.mesi
 
-@dataclass
+@dataclass   #dataclass crea funzione__eq__ ma non __hash__
 class ProdottoRecord:
     name: str
     prezzo_unitario: float
+
+    def __hash__(self):   #RENDO PRODOTTORECORD HASHABLE, SENNO MI DA ERRORE
+        return hash((self.name, self.prezzo_unitario))
+
+    def __str__(self):   #LO AGGIUNGIAMO COSI QUANDO STAMPIAMO LA STAMPA E CARINA
+       return f"{self.name} --- {self.prezzo_unitario}"
 
 MAX_QUANTITA = 1000
 
