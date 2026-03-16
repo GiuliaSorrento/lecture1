@@ -1,5 +1,5 @@
 import copy
-from collections import Counter
+from collections import Counter, deque
 
 from gestionale.core.clienti import ClienteRecord
 from gestionale.core.prodotti import ProdottoRecord
@@ -201,7 +201,7 @@ riga3 = RigaOrdine(p3,5)
 #ordini.append(ordine3)
 
 #2 SET, DEVO MEMORIZZARE SOLO I CODICI FISCALI NON ANCHE I CLIENTI, IL SET VA BENE PERCHE I CF SONO UNICI, NO DUPLICATI
-codicif = set("cf1", "cf2","cf3")
+#codicif = set("cf1", "cf2","cf3")
 
 #3dizionario codice, prodotto
 prodotti={"cod1": p1, "cod2": p2, "cod3": p3}
@@ -210,8 +210,8 @@ prodotti={"cod1": p1, "cod2": p2, "cod3": p3}
 coordinateRoma=(45,130)
 
 #5 set di categorie
-categorie4Gennaio = set(cliente1.categoria,cliente2.categoria)
-categorie4Gennaio.add("Bronze")
+#categorie4Gennaio = set(cliente1.categoria,cliente2.categoria)
+#categorie4Gennaio.add("Bronze")
 
 
 
@@ -264,5 +264,23 @@ vendite_gennaio["Laptop"] += 4   #aggiorno
 #simile a un dizionario ma con metodi in più
 
 #defaultdicts
+
+#deque
+
+coda_ordini= deque()
+for i in range(1,10):
+    cliente = ClienteRecord(f"Cliente{i}", f"cliente{i}@polito.it","Gold")
+    prodotto = ProdottoRecord(f"Prodotto{i}", 100.0*i)
+    ordine = Ordine([RigaOrdine(prodotto,1)],cliente)
+    coda_ordini.append(ordine)
+
+print(f"ho {len(coda_ordini)} ordini")
+
+while coda_ordini:    #scorre la cosa ordini
+    ordine_corrente= coda_ordini.popleft()
+    print(f"sto gestendo l'ordine del cliente {ordine_corrente}")
+
+print(f"ho processato tutti gli ordini")
+
 
 
