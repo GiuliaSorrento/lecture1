@@ -1,7 +1,8 @@
 from gestionale.vendite.ordini import Ordine, RigaOrdine, OrdineConSconto
 from gestionale.core.prodotti import Prodotto, crea_prodotto_standard, ProdottoRecord
 from gestionale.core.clienti import Cliente, ClienteRecord
-import networkx as hx  #importa la libreria networkx(package)
+import networkx as nx
+
 print("=======================================================")
 
 p1 = Prodotto("Ebook Reader", 120.0, 1, "AAA")
@@ -11,6 +12,7 @@ print (p1)
 print (p2)
 print("=======================================================")
 
+c1 = Cliente("Mario Rossi", "mail@mail.com", "Gold")
 
 cliente1 = ClienteRecord("Mario Rossi", "mariorossi@example.com", "Gold")
 p1 = ProdottoRecord("Laptop", 1200.0)
@@ -33,4 +35,3 @@ print("-------------------------------------------------------------------")
 #Nel package gestionale, scriviamo un modulo fatture.py che contenga:
 # - una classe Fattura che contiene un Ordine, un numero_fattura e una data
 # - un metodo genera_fattura() che restituisce una stringa formattata con tutte le info della fattura
-

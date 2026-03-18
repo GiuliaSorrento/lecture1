@@ -31,16 +31,14 @@ class Cliente:
         # "Cliente Fulvio Bianchi (Gold) - fulvio@google.com"
         return f"Cliente {self.nome} ({self.categoria}) - {self.mail}"
 
-from dataclasses import dataclass
-
 @dataclass
 class ClienteRecord:
-    nome: str        # I due punti e il tipo sono OBBLIGATORI
-    email: str
+    nome: str
+    mail: str
     categoria: str
 
     def __str__(self):
-        return f"{self.nome}--{self.email}--{self.categoria}"
+        return f"{self.nome} -- {self.mail} ({self.categoria})"
 
 
 def _test_modulo():
